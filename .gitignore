@@ -1,5 +1,6 @@
 # Qt Creator / CMake build output
 build/
+dist/
 
 # Qt Creator per-user project settings
 *.user

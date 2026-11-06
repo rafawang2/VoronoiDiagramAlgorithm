@@ -16,8 +16,23 @@ set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
         mainwindow.h
-        mainwindow.ui
+        appstyle.h
+        voronoicanvas.cpp
+        voronoicanvas.h
 )
+
+add_library(voronoi_core STATIC voronoi.cpp voronoi.h dataio.cpp dataio.h)
+target_include_directories(voronoi_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+# MinGW's temporary assembler paths cannot contain non-ASCII Windows user names.
+# Keep intermediate assembly files beside each object inside the build directory.
+if(MINGW)
+    add_compile_options(-save-temps=obj)
+    target_compile_options(voronoi_core PRIVATE -save-temps=obj)
+endif()
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    target_compile_options(voronoi_core PRIVATE -Wall -Wextra -Wpedantic)
+endif()
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(VoronoiDiagramAlgorithm
@@ -42,7 +57,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(VoronoiDiagramAlgorithm PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(VoronoiDiagramAlgorithm PRIVATE Qt${QT_VERSION_MAJOR}::Widgets voronoi_core)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
@@ -67,4 +82,20 @@ install(TARGETS VoronoiDiagramAlgorithm
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(VoronoiDiagramAlgorithm)
+endif()
+
+include(CTest)
+if(BUILD_TESTING)
+    add_executable(voronoi_tests tests/engine_tests.cpp)
+    target_link_libraries(voronoi_tests PRIVATE voronoi_core)
+    add_test(NAME geometry_and_io COMMAND voronoi_tests)
+    add_test(NAME course_test_data COMMAND voronoi_tests --file ${CMAKE_CURRENT_SOURCE_DIR}/examples/course-tests.in)
+
+    find_package(Qt${QT_VERSION_MAJOR} QUIET COMPONENTS Test)
+    if(TARGET Qt${QT_VERSION_MAJOR}::Test)
+        add_executable(voronoi_ui_tests tests/ui_tests.cpp mainwindow.cpp mainwindow.h voronoicanvas.cpp voronoicanvas.h)
+        target_link_libraries(voronoi_ui_tests PRIVATE voronoi_core Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Test)
+        target_compile_definitions(voronoi_ui_tests PRIVATE PROJECT_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
+        add_test(NAME ui_workflow COMMAND voronoi_ui_tests -platform offscreen)
+    endif()
 endif()

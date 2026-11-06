@@ -1,0 +1,44 @@
+# Single point
+1
+300 300
+# Pair
+2
+200 200
+400 200
+# PDF example: diamond
+4
+193 64
+193 370
+103 200
+283 200
+# Cocircular square
+4
+150 150
+150 450
+450 150
+450 450
+# Collinear and duplicated input
+5
+100 100
+200 200
+300 300
+400 400
+300 300
+# Multi-level divide and conquer
+12
+80 110
+110 310
+70 500
+220 190
+230 410
+295 70
+350 520
+370 290
+430 100
+510 210
+490 430
+570 550
+# End: deliberately ignore the tail
+0
+1 1
+not a dataset
