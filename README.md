@@ -103,4 +103,4 @@ ctest --test-dir build/release --output-on-failure
 ./scripts/export-source.ps1 -StudentId YOUR_ID -ChineseName "你的姓名" -EnglishName "Your Name"
 ```
 
-輸出至 `dist/source/YOUR_ID.txt`。本次工作提供程式、測試、建置與部署；PDF 所要求的個人 HTML 成果報告與個人心得需另行完成。AI 輔助方式已記錄於 `docs/AI_USAGE.md`，可供整理報告時參考。課程輸入格式依 PDF 所連結的 [官方格式說明](https://nsysucbyang.github.io/my-site/course/algo/vd_testdata.htm) 驗證。
+輸出至 `dist/source/YOUR_ID.txt`。
