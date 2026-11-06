@@ -1,0 +1,17 @@
+# Qt Creator / CMake build output
+build/
+
+# Qt Creator per-user project settings
+*.user
+
+# Common generated binaries and object files
+*.exe
+*.dll
+*.obj
+*.o
+*.a
+*.lib
+
+# IDE/editor settings
+.vscode/
+.idea/
