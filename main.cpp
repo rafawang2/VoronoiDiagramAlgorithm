@@ -8,7 +8,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QApplication::setApplicationName("Voronoi Studio");
+    QApplication::setApplicationName("Voronoi Diagram");
     QApplication::setApplicationVersion("1.0");
     initializeAppearance();
     MainWindow w;

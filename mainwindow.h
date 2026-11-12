@@ -40,7 +40,7 @@ private:
     bool imported_ = false, fileEnded_ = false;
     QString source_;
     VoronoiCanvas *canvas_ = nullptr;
-    QLabel *phaseTitle_ = nullptr, *phaseText_ = nullptr, *sourceLabel_ = nullptr;
+    QLabel *phaseText_ = nullptr, *sourceLabel_ = nullptr;
     QLabel *pointCount_ = nullptr, *edgeCount_ = nullptr, *timeLabel_ = nullptr;
     QLabel *datasetLabel_ = nullptr, *coordinateLabel_ = nullptr, *stateBadge_ = nullptr;
     QPushButton *runButton_ = nullptr, *stepButton_ = nullptr, *saveButton_ = nullptr;

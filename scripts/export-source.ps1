@@ -1,7 +1,7 @@
 param(
-    [string]$StudentId = 'TODO',
-    [string]$ChineseName = 'TODO',
-    [string]$EnglishName = 'TODO'
+    [string]$StudentId = 'M153040089',
+    [string]$ChineseName = '王駿彥',
+    [string]$EnglishName = 'Wang Chun-Yen'
 )
 $ErrorActionPreference = 'Stop'
 if ($StudentId -notmatch '^[A-Za-z0-9_-]+$') { throw 'Student ID must be a safe filename.' }

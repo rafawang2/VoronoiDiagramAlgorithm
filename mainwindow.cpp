@@ -45,7 +45,7 @@ QPushButton *button(const QString &text, const char *name)
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    setWindowTitle(QStringLiteral("Voronoi Studio | Divide & Conquer"));
+    setWindowTitle(QStringLiteral("Voronoi Diagram"));
     resize(1190, 960);
     buildUi(); refreshTable(); refresh();
     if (QApplication::platformName() != "offscreen" && screen()) {
@@ -101,9 +101,7 @@ void MainWindow::buildUi()
     auto *header = new QFrame; header->setObjectName("header");
     auto *hl = new QHBoxLayout(header); hl->setContentsMargins(22, 15, 22, 15);
     auto *brand = new QVBoxLayout; brand->setSpacing(3);
-    brand->addWidget(label("COMPUTATIONAL GEOMETRY / 01", "eyebrow"));
-    brand->addWidget(label("Voronoi Studio", "brand"));
-    brand->addWidget(label(QStringLiteral("分割、遞迴與合併，看見最近鄰區域如何形成。"), "subtitle"));
+    brand->addWidget(label("Voronoi Diagram", "brand"));
     hl->addLayout(brand); hl->addStretch();
     stateBadge_ = label(QStringLiteral("準備輸入"), "stateBadge"); hl->addWidget(stateBadge_);
     main->addWidget(header);
@@ -152,10 +150,9 @@ void MainWindow::buildUi()
     auto *side = new QVBoxLayout(sidebar); side->setContentsMargins(0, 0, 0, 0); side->setSpacing(10);
     auto *stepCard = new QFrame; stepCard->setObjectName("card");
     auto *sl = new QVBoxLayout(stepCard); sl->setContentsMargins(17, 15, 17, 15);
-    sl->addWidget(label("DIVIDE & CONQUER", "section"));
-    phaseTitle_ = label(QStringLiteral("建立你的點集"), "phaseTitle");
+    // sl->addWidget(label("DIVIDE & CONQUER", "section"));
     phaseText_ = label(QString(), "phaseText"); phaseText_->setWordWrap(true); phaseText_->setMinimumHeight(58);
-    sl->addWidget(phaseTitle_); sl->addWidget(phaseText_);
+    sl->addWidget(phaseText_);
     progress_ = new QProgressBar; progress_->setTextVisible(false); progress_->setFixedHeight(6); sl->addWidget(progress_);
     auto *execution = new QHBoxLayout;
     stepButton_ = button("Step by step", "stepButton"); runButton_ = button("Run", "runButton");
@@ -297,7 +294,7 @@ void MainWindow::refresh(bool recordStep)
         description = QStringLiteral("點擊畫布輸入座標。Step by step 會在每次 merge 之前暫停；Run 可從當前狀態執行至最後。");
         badge = QStringLiteral("準備輸入");
     }
-    phaseTitle_->setText(title); phaseText_->setText(description); stateBadge_->setText(badge);
+    phaseText_->setText(description); stateBadge_->setText(badge);
     const int edges = frame.phase == vd::Phase::BeforeMerge ? int(frame.leftEdges.size() + frame.rightEdges.size()) : int(frame.resultEdges.size());
     pointCount_->setText(QString::number(engine_.points().size())); edgeCount_->setText(QString::number(edges));
     timeLabel_->setText(QString::number(engine_.milliseconds(), 'f', engine_.milliseconds() < 10 ? 2 : 1));
